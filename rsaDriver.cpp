@@ -18,8 +18,7 @@ int main(int argc, char*argv[]){      /*****************************************
 	BigInt message, cipher, deciphered;
 
        message = int(((double)std::rand()/RAND_MAX)*RAND_LIMIT32);
-       message.toULong(a,4);
-       cipher = myRSA.encrypt(message);
+        cipher = myRSA.encrypt(message);
        deciphered = myRSA.decrypt(cipher);
        std::cout<<*a<<std::endl;
   //  std::cout<<"message "<<message.toString();
