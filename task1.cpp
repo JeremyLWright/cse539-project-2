@@ -25,16 +25,14 @@ int main(int argc, const char *argv[])
 
     std::cout << "========= Default Constructor ===========\n";
     //do some asserts here to show correctness to TA.
-    std::vector<int> ns(10);
-    std::iota(std::begin(ns), std::end(ns), 0);
-    for(auto& n : ns)
+    for(int i = 0; i < 10; ++i)
     {
         RSAUtil::RSA r;
         RSAUtil::BigInt m(123456);
         auto ciphertext = r.encrypt(m);
         auto cleartext = r.decrypt(ciphertext);
         if(m == cleartext)
-            std::cout << n << ": Correct decrypt\n";
+            std::cout << i << ": Correct decrypt\n";
     }
     
     std::cout << "========= Single Constructor ===========\n";
@@ -59,9 +57,9 @@ int main(int argc, const char *argv[])
         auto ciphertext = r.encrypt(m);
         auto cleartext = r.decrypt(ciphertext);
         if(m == cleartext)
-            std::cout << n.first << ": Correct decrypt\n";
+            std::cout << "(" << n.first << ", " << n.second << "): Correct decrypt\n";
         else
-            std::cout << n.first << ": Bad decrypt\n";
+            std::cout << "(" << n.first << ", " << n.second << "): Bad decrypt\n";
 
     }
     
@@ -73,27 +71,11 @@ int main(int argc, const char *argv[])
         auto ciphertext = r.encrypt(m);
         auto cleartext = r.decrypt(ciphertext);
         if(m == cleartext)
-            std::cout << n.first << ": Correct decrypt\n";
+            std::cout << "(" << n.first << ", " << n.second << "): Correct decrypt\n";
         else
-            std::cout << n.first << ": Bad decrypt\n";
+            std::cout << "(" << n.first << ", " << n.second << "): Bad decrypt\n";
 
     }
-
-
-    std::cout << "========= Challenge Response ===========\n";
-    RSAUtil::RSA rsa1;
-    RSAUtil::RSA rsa2;
-    auto pub = rsa1.getPublicKey();
-    auto mod = rsa1.getModulus();
-    rsa2.setPublicKey(pub);
-    rsa2.setN(mod);
-
-    RSAUtil::BigInt m(123);
-    auto c = rsa1.decrypt(rsa2.encrypt(m));
-    if(c == m)
-        std::cout << "Successful!\n";
-    
-
 
     return 0;
 }
