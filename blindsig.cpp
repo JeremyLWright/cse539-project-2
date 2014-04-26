@@ -13,7 +13,10 @@ RSAUtil::BigInt blind_signature_test(RSAUtil::RSA alice, RSAUtil::RSA bob, RSAUt
     auto random_num_inverse = modInverse(random_num, bobs_modulus);
     //c.       Alice obtains/generates a message to be signed.
     //d.      Alice encrypts the random number with the public key.
-    auto cipher_random_num = bob.encrypt(random_num);
+    RSAUtil::RSA encrypting_key;
+    encrypting_key.setPublicKey(bobs_public_key);
+    encrypting_key.setN(bobs_modulus);
+    auto cipher_random_num = encrypting_key.encrypt(random_num);
     //e.       Alice multiplies this value by the message
     auto mul = message * cipher_random_num;
     //f.       Alice then takes a modulus over N
@@ -30,6 +33,9 @@ RSAUtil::BigInt blind_signature_test(RSAUtil::RSA alice, RSAUtil::RSA bob, RSAUt
     return clear_text;
 }
 
+std::queue<RSAUtil::RSA> alice_to_bob;
+std::queue<RSAUtil::RSA> bob_to_alice;
+
 
 int main(int argc, const char *argv[])
 {
@@ -44,7 +50,6 @@ int main(int argc, const char *argv[])
         RSAUtil::RSA bob;
 
         auto clear_text = blind_signature_test(alice, bob, m);
-
 
 
         if(m == clear_text)
