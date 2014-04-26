@@ -3,12 +3,10 @@
 #include "RSA.h"
 #include <iostream>
 #include <algorithm>
-#include <primesieve.hpp>
 
 int main(int argc, const char *argv[])
 {
-    std::vector<uint64_t> primes;            
-    primesieve::generate_n_primes(30, 30000, &primes);
+    std::vector<uint64_t> primes{30011,30013,30029,30047,30059,30071,30089,30091,30097,30103,30109,30113,30119,30133,30137,30139,30161,30169,30181,30187,30197,30203,30211,30223,30241,30253,30259,30269,30271,30293};
 
     auto p = std::begin(primes);
     std::vector<uint64_t> five_primes(p, p+5);

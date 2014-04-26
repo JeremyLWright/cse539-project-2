@@ -1,18 +1,20 @@
-EXECUTABLE=task1
-OBJS=BigInt.o RSA.o task1.o
+OBJS=BigInt.o RSA.o #task1.o #blindsig.o
 CXX=g++
-CXX_FLAGS=-std=gnu++11 -Wall -O3 -Idependencies/include -Ldependencies/lib
+CXX_FLAGS=-std=gnu++11 -Wall -O3
 
-%.o: %.cpp dependencies/include/primesieve.hpp
+all: task1 blindsig
+
+
+%.o: %.cpp
 	$(CXX) $(CXX_FLAGS) -o $@ -c $<
 
-$(EXECUTABLE): $(OBJS) 
-	$(CXX) $(CXX_FLAGS) -o $@ $(OBJS) -static -lprimesieve
+task1: $(OBJS) task1.o
+	$(CXX) $(CXX_FLAGS) -o $@ $(OBJS) task1.o -static
+
+blindsig: $(OBJS) blindsig.o
+	$(CXX) $(CXX_FLAGS) -o $@ $(OBJS) blindsig.o -static
+
 
 clean:
-	rm -rf $(OBJS) dependencies task1
-	cd primesieve-5.2 && make clean
-
-dependencies/include/primesieve.hpp:
-	cd primesieve-5.2 && ./configure --prefix=$(PWD)/dependencies && make install && cd ..
+	rm -rf $(OBJS) dependencies task1 blindsig
 
