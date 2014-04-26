@@ -3,6 +3,11 @@ CXX=g++
 CXX_FLAGS=-std=gnu++11 -Wall -O3
 
 all: task1 blindsig
+	@echo "====================================="
+	@echo "Running Task 1"
+	./task1
+	@echo "========= Blind Signature ==========="
+	./blindsig
 
 
 %.o: %.cpp
