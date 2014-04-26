@@ -1,18 +1,10 @@
 #include <queue>
+#include <stdexcept>
 #include <iostream>
 #include "RSA.h"
 
-
-
-int main(int argc, const char *argv[])
+RSAUtil::BigInt blind_signature_test(RSAUtil::RSA alice, RSAUtil::RSA bob, RSAUtil::BigInt message)
 {
-   
-    //The scheme can be briefly stated as:
-    // 
-    //To implement the sending and receiving, you may use whatever method you choose, you can use files, pipes or just pass it through functions, or through global memory. Ensure that the random number is around 16 bits long for the program to work correctly.
-    RSAUtil::RSA alice(30011, 30013);
-    RSAUtil::RSA bob(30029, 30047);
-
     //a.       Alice obtains the public key and Modulus N of the person (Bob) who is to sign the message
     auto bobs_modulus = bob.getModulus();
     auto bobs_public_key = bob.getPublicKey();
@@ -20,12 +12,10 @@ int main(int argc, const char *argv[])
     RSAUtil::BigInt random_num(13);
     auto random_num_inverse = modInverse(random_num, bobs_modulus);
     //c.       Alice obtains/generates a message to be signed.
-    RSAUtil::BigInt alices_message(0x7FFF);
-    std::cout << alices_message.toString() << '\n';
     //d.      Alice encrypts the random number with the public key.
     auto cipher_random_num = bob.encrypt(random_num);
     //e.       Alice multiplies this value by the message
-    auto mul = alices_message * cipher_random_num;
+    auto mul = message * cipher_random_num;
     //f.       Alice then takes a modulus over N
     auto modded = mul % bobs_modulus;
     //g.      Alice sends it to Bob
@@ -37,11 +27,32 @@ int main(int argc, const char *argv[])
     //k.      The value obtained above is the signed message. To obtain the original message from it, again encrypt it with Bob’s Public Key.
     auto clear_text = bob.encrypt(signed_message);
 
-    if(alices_message == clear_text)
-        std::cout << "Success.\n";
-    else
-        std::cout << "I'm sad.\n";
-    std::cout << clear_text.toString() << '\n';
+    return clear_text;
+}
+
+
+int main(int argc, const char *argv[])
+{
+   
+    //The scheme can be briefly stated as:
+    // 
+    //To implement the sending and receiving, you may use whatever method you choose, you can use files, pipes or just pass it through functions, or through global memory. Ensure that the random number is around 16 bits long for the program to work correctly.
+
+    for(RSAUtil::BigInt m = 1; m < 0xFFFFF; m = m + 1)
+    {
+        RSAUtil::RSA alice;
+        RSAUtil::RSA bob;
+
+        auto clear_text = blind_signature_test(alice, bob, m);
+
+
+
+        if(m == clear_text)
+        {
+        }
+        else
+            throw std::runtime_error("Blind Signature failed.");
+    }
 
 
 
