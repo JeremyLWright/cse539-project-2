@@ -73,7 +73,7 @@ int main(int argc, const char *argv[])
         if(m == cleartext)
             std::cout << "(" << n.first << ", " << n.second << "): Correct decrypt\n";
         else
-            std::cout << "(" << n.first << ", " << n.second << "): Bad decrypt\n";
+            std::cout << "(" << n.first << ", " << n.second << "): Bad decrypt, composite numbers cannot be used for RSA since composite numbers violate phi = (p - 1)(q - 1) the mod inverse doesn't work properly.\n";
 
     }
 

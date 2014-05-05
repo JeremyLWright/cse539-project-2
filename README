@@ -1,0 +1,79 @@
+Jeremy Wright
+Spring 2014
+Student ID: 1000738685
+
+--------
+Overview
+--------
+The three tasks from project 3 are separated into 3 source files:
+
+task1.cpp - Tests the RSA constructors.  Bad decrypts print
+accordingly.
+challenge_response.cpp - Performs a simple challenge response using
+RSA.
+blingsig.cpp - Creates 2 classes Alice, and Bob. 
+  Alice and Bob then trade public private information to blindly sign a random
+  number.
+
+----------------
+Running the Code
+----------------
+Included is a makefile which will build and run the software. Simply
+type make on the command prompt.
+
+Example Run:
+$ make
+=====================================
+Running Task 1
+./task1
+========= Default Constructor ===========
+0: Correct decrypt
+1: Correct decrypt
+2: Correct decrypt
+3: Correct decrypt
+4: Correct decrypt
+5: Correct decrypt
+6: Correct decrypt
+7: Correct decrypt
+8: Correct decrypt
+9: Correct decrypt
+========= Single Constructor ===========
+30011: Correct decrypt
+30013: Correct decrypt
+30029: Correct decrypt
+30047: Correct decrypt
+30059: Correct decrypt
+========= Prime Pairs Constructor ===========
+(30013, 30011): Correct decrypt
+(30029, 30013): Correct decrypt
+(30047, 30029): Correct decrypt
+(30059, 30047): Correct decrypt
+(30071, 30059): Correct decrypt
+========= Composite Pair Constructor ===========
+(30090, 30072): Bad decrypt, composite numbers cannot be used for RSA since composite numbers violate phi = (p - 1)(q - 1) the mod inverse doesn't work properly.
+(30092, 30090): Bad decrypt, composite numbers cannot be used for RSA since composite numbers violate phi = (p - 1)(q - 1) the mod inverse doesn't work properly.
+(30098, 30092): Bad decrypt, composite numbers cannot be used for RSA since composite numbers violate phi = (p - 1)(q - 1) the mod inverse doesn't work properly.
+(30104, 30098): Bad decrypt, composite numbers cannot be used for RSA since composite numbers violate phi = (p - 1)(q - 1) the mod inverse doesn't work properly.
+(30110, 30104): Bad decrypt, composite numbers cannot be used for RSA since composite numbers violate phi = (p - 1)(q - 1) the mod inverse doesn't work properly.
+(30114, 30110): Bad decrypt, composite numbers cannot be used for RSA since composite numbers violate phi = (p - 1)(q - 1) the mod inverse doesn't work properly.
+(30120, 30114): Bad decrypt, composite numbers cannot be used for RSA since composite numbers violate phi = (p - 1)(q - 1) the mod inverse doesn't work properly.
+(30134, 30120): Bad decrypt, composite numbers cannot be used for RSA since composite numbers violate phi = (p - 1)(q - 1) the mod inverse doesn't work properly.
+(30138, 30134): Bad decrypt, composite numbers cannot be used for RSA since composite numbers violate phi = (p - 1)(q - 1) the mod inverse doesn't work properly.
+(30140, 30138): Bad decrypt, composite numbers cannot be used for RSA since composite numbers violate phi = (p - 1)(q - 1) the mod inverse doesn't work properly.
+./challenge_response
+========= Challenge Response ===========
+Challenge-Response Match Successful!
+========= Blind Signature ===========
+./blindsig
+[Alice] Creating Message: 0x7FFF 
+[Alice] Creating Random Number: 0x000D 
+[Alice] Receiving Bob's modulus
+[Alice] Receiving public key from Bob
+[Bob] Decrypting value from alice.
+[Alice] Receiving decrypted value from Bob.
+[Alice] Clear Text: 0x7FFF 
+=====================================
+Jeremy Wright - Spring 2014 - 1000738685
+=====================================
+
+  
